@@ -38,7 +38,7 @@ const Profile = () => {
 <div className='feed-container'>
       {/* <button onClick={() => profileData()}>New Person</button> */}
       <div className="card">
-        <img  src={user.avatar} style={{ width: "100%" ,borderRadius:'360%' }} />
+        <img class="avatar" src={user.avatar} style={{  borderRadius:"50%",width:"300px", height: "300px" }} />
         
         <h1 style={{color:'white'}}>{user.firstname}</h1>
         <p className="title">{user.email}</p>
@@ -49,7 +49,7 @@ const Profile = () => {
         
       </div>
 
-
+   
 
     </div>
  
