@@ -4,9 +4,7 @@ var Groupe = require("../models/Groupe");
 
 exports.insert = (req, res) => {
   Groupe.createGroupe(req.body).then((groupe) => {
-    groupe != undefined
-      ? res.statut(201).send({ msg: "groupe created successfuly" })
-      : res.statut(400).send({ msg: "invalid groupe" });
+    groupe != undefined ? res.status(201).send({ msg: "groupe created successfuly" }) : res.status(400).send({ msg: "invalid groupe" });
   });
 };
 

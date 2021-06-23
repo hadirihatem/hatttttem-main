@@ -6,79 +6,7 @@ const Post=require ("../models/Post")
 const User=require("../models/Usermodel")
 
 
-//---------------------------
 
-// exports.putlikepost=(req,res)=>{
-//   PostModel.likePost(req,res)
-//   // .then(() => {
-//   //   res.status(200).send([
-//   //     {
-//   //       msg: "post liked",
-//   //     },
-//   //   ]);
-//   // })
-//   // .catch(() =>
-//   //   res.status(404).send("post not found, retry with a valid postId.")
-//   // );
-// }
-
-// exports.putlikepost = async(req, res) => {
-//       try {
-       
-    
-//         const post = await PostModel.findById(req.params.postId);
-//         // console.log(post)
-//         // console.log(req.userId)
-        
-//         console.log(post.likers)
-    
-//         // if (post.likers.filter(post=>console.log(req.userId,post)))
-//         if (post.likers.filter(like=>like.user.toString()===req.userId).length>0) {
-//       return res.status(400).json({msg:'post already liked'})
-//         }
-    
-//         post.likers.unshift({count:req.userId})
-       
-    
-//         await post.save();
-//        res.json(post.likers)
-//       } catch (err) {
-//         res.status(500).json(err);
-//       }
-    
-//     }
-
-
-    // exports.putlikepost = async (req, res) => {
-    
-  
-    //       try {
-    //         await Post.findByIdAndUpdate(
-    //           req.params.postId,
-    //           {
-    //             $addToSet: { likers: req.body.id },
-    //           },
-    //           { new: true },
-    //           (err, docs) => {
-    //             if (err) return res.status(400).send(err);
-    //           }
-    //         );
-           
-    //         await User.findByIdAndUpdate(
-    //           req.body.userId,
-    //           {
-    //             $addToSet: { likers: req.params.id },
-    //           },
-    //           { new: true },
-    //           (err, docs) => {
-    //             if (!err) res.send(docs);
-    //             else return res.status(400).send(err);
-    //           }
-    //         );
-    //       } catch (err) {
-    //         return res.status(400).send(err);
-    //       }
-    //     };
 
 //----------------------------------------------------------
 exports.insert = async (req, res) => {

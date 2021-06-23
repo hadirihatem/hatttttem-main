@@ -2,15 +2,15 @@ const Groupe=require('./GroupeModel')
 const User=require('./Usermodel')
 //----------------------------------------------
 
-exports.createGroupe = (groupetData) => {
-  const groupe = new Groupe(groupetData);
+exports.createGroupe = (groupeData) => {
+  const groupe = new Groupe(groupeData);
   return groupe.save().catch((e) => console.log(e.message));
 };
 
 //--------------------------------------------
 
 exports.findById = (id) => {
-  return User.findById(id).then((result) => {
+  return Groupe.findById(id).then((result) => {
     result = result.toJSON();
     delete result._id;
     delete result.__v;

@@ -26,7 +26,7 @@ export const creategroupe=(data)=>(dispatch)=>{
       type: CREATEGROUPE_FAIL,
       payload: err.response.data.msg,
     })
-  );hbj
+  );
 }
 
 export const getgroupe = (id) => (dispatch) => {

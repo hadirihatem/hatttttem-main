@@ -32,7 +32,7 @@ const Likebutton = ({post}) => {
     return (
         <div>
         
-          <img src="./images/heart.svg" style={{backgroundColor:liked? 'black':'red'}} onClick={like} alt="like" />
+          <img src="./images/heart.svg" style={{backgroundColor:liked? 'red':'black'}} onClick={like} alt="like" />
           <span>{post.likers.length}</span>
         </div>
     )
