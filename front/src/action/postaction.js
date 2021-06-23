@@ -1,10 +1,10 @@
 import {
-  ADDCOMMENT_SUCCESS,
+  
   ADDCOOMENT_FAIL,
   ADDPOST_FAIL,
   GETPOSTS,
   GET_POST,
-  ADDLIKE_SUCCESS,
+  
   ADDLIKE_FAIL,
   MOST_LIKED_POST,
   LIKEPOST_ERROR,
@@ -13,6 +13,7 @@ import {
   GETCOMMENT_SUCCESS
 } from "./type";
 import axios from "axios";
+import setToken from "../setToken";
 
 //-----------getposts---------------
 
@@ -103,14 +104,11 @@ export const getComments =(postId)=>(dispatch)=>{
 //----------addliketopost---------------------
 
 export const addliketopost = (postId) => (dispatch) => {
+setToken()
   axios
     .put(`http://localhost:4000/postlike/${postId}`)
     .then((res) => {
-      return dispatch({
-        type: ADDLIKE_SUCCESS,
-        payload: res.data,
-      });
-      dispatch(getpost(postId));
+      return dispatch(getPosts())
     })
     .catch((err) =>
       dispatch({

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { addcomment, getPosts } from '../action/postaction'
+import { useDispatch } from 'react-redux'
+import { addcomment } from '../action/postaction'
 
 const Comment = (props) => {
    

@@ -2,7 +2,7 @@ require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User=require("../models/Usermodel")
-
+const UserModel=require("../models/User")
 
 //-------------register---------------
 
@@ -163,7 +163,7 @@ exports.list = (req, res) => {
       page = Number.isInteger(req.query.page) ? req.query.page : 0;
     }
   }
-  User.find().then((result) => {
+  UserModel.find().then((result) => {
     res.status(200).send({
       code: 200,
       status: "success",

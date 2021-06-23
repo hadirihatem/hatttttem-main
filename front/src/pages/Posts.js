@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import {  useDispatch, useSelector } from "react-redux";
 import "./Feed.css";
 import "../App.css";
+import Likebutton from './Likebutton'
 
 import { Spinner } from "react-bootstrap";
-import { ListItem, ListItemText, ListItemAvatar, Avatar, TextField, Button } from '@material-ui/core';
+import { ListItem, ListItemText, ListItemAvatar, Avatar } from '@material-ui/core';
 
 import Comments from './Comments';
 import Comment from './Comment';
@@ -59,12 +60,12 @@ useEffect(() => {
         <h4 className="post__text"><strong> </strong>{post.title}</h4>
          <h4 className="post__text"><strong> </strong>{post.discription}</h4>
         <div className="post__comments">
-            {/* <Comments /> */}
+         
         
         </div>
         <Comments postId={post._id} comments={comments}/>
         <Comment refreshComment={refreshComment}   postId={post._id} writer={auth.user._id}/>
-            
+            <Likebutton post={post}/>
         
     </div>
 </div>

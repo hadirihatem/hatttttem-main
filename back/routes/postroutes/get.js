@@ -6,7 +6,7 @@ const initalizeposteroute = (app) => {
   app.get("post/date",authmidllwares,postcontroller.getpostbydate);
   app.get("post/mostliked",[authmidllwares,postcontroller.mostliked]);
   app.get("/posts", [authmidllwares, postcontroller.list]);
-  app.get("/comment/mostcomment",[authmidllwares,postcontroller.mostcommented])
+
   app.get("/post/getmypost",[authmidllwares,postcontroller.getmypost]);
 };
 module.exports = initalizeposteroute;

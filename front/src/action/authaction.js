@@ -14,7 +14,7 @@ import setToken from "../setToken";
 
 // register User
 export const registerUser = (info) => (dispatch) => {
-  console.log("hello");
+  
   axios
     .post("http://localhost:4000/users/register", info)
     .then((res) =>

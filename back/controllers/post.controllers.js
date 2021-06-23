@@ -1,10 +1,84 @@
-const PostModel= require("../models/Post");
+const PostModel= require("../models/PostModel");
 
 const UserModel = require("../models/Usermodel");
 const { validationResult } = require("express-validator");
+const Post=require ("../models/Post")
+const User=require("../models/Usermodel")
 
 
+//---------------------------
 
+// exports.putlikepost=(req,res)=>{
+//   PostModel.likePost(req,res)
+//   // .then(() => {
+//   //   res.status(200).send([
+//   //     {
+//   //       msg: "post liked",
+//   //     },
+//   //   ]);
+//   // })
+//   // .catch(() =>
+//   //   res.status(404).send("post not found, retry with a valid postId.")
+//   // );
+// }
+
+// exports.putlikepost = async(req, res) => {
+//       try {
+       
+    
+//         const post = await PostModel.findById(req.params.postId);
+//         // console.log(post)
+//         // console.log(req.userId)
+        
+//         console.log(post.likers)
+    
+//         // if (post.likers.filter(post=>console.log(req.userId,post)))
+//         if (post.likers.filter(like=>like.user.toString()===req.userId).length>0) {
+//       return res.status(400).json({msg:'post already liked'})
+//         }
+    
+//         post.likers.unshift({count:req.userId})
+       
+    
+//         await post.save();
+//        res.json(post.likers)
+//       } catch (err) {
+//         res.status(500).json(err);
+//       }
+    
+//     }
+
+
+    // exports.putlikepost = async (req, res) => {
+    
+  
+    //       try {
+    //         await Post.findByIdAndUpdate(
+    //           req.params.postId,
+    //           {
+    //             $addToSet: { likers: req.body.id },
+    //           },
+    //           { new: true },
+    //           (err, docs) => {
+    //             if (err) return res.status(400).send(err);
+    //           }
+    //         );
+           
+    //         await User.findByIdAndUpdate(
+    //           req.body.userId,
+    //           {
+    //             $addToSet: { likers: req.params.id },
+    //           },
+    //           { new: true },
+    //           (err, docs) => {
+    //             if (!err) res.send(docs);
+    //             else return res.status(400).send(err);
+    //           }
+    //         );
+    //       } catch (err) {
+    //         return res.status(400).send(err);
+    //       }
+    //     };
 
 //----------------------------------------------------------
 exports.insert = async (req, res) => {
@@ -15,6 +89,7 @@ exports.insert = async (req, res) => {
   //         code: 201,
   //         status: "success",
   //         message: "post created successfuly",
+
   //         data: result,
   //       })
   //     : res.status(400).json({
@@ -44,7 +119,7 @@ exports.getpost = (req, res) => {
 //------------------mypost-----------
 
 exports.getmypost = (req, res) => {
-  UserModel.find({ owner: req.userId })
+  UserModel.findById({ owner: req.userId })
     .then((posts) => res.send(posts))
     .catch((err) => {
       console.log(err.message);
@@ -89,23 +164,34 @@ exports.putpost = (req, res) => {
 
 //--------like/dislike---------------
 
-exports.putlikepost = (req, res) => {
-  async () => {
+exports.putlikepost = async (req, res) => {
+   
     try {
-      const post = await PostModel.findById(req.params.id);
-      if (!post) return res.status(404).json("Post not found");
-      if (!post.likes.includes(req.body.userId)) {
-        await post.updateOne({ $push: { like: req.body.userId } });
-        res.status(200).json("like post benn liked");
-      } else {
-        await post.updateOne({ $pull: { like: req.body.userId } });
-        res.status(200).json("like post benn disliked");
+      const post = await PostModel.findById(req.params.postId);
+      if (!post) return res.status(404).json("Post not found")
+      console.log(post.likers)
+      console.log(req.userId)
+      const search = post.likers.find(like=>like == req.userId)
+      
+      if (!search) {
+        console.log('true')
+        const newPost = await Post.findByIdAndUpdate(req.params.postId,{ likers:[req.userId]});
+        res.status(200).json(newPost.likers);
+
+      } 
+      
+      else {
+        console.log('false')
+        const newPost = await Post.findByIdAndUpdate(req.params.postId,{ $pull: { likers: req.userId}});
+
+        // await post.updateOne({ $pull: { likers: req.userId } });
+        res.status(200).json(newPost.likers);
       }
+     
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json(err); 
     }
   };
-};
 
 
 
@@ -113,7 +199,7 @@ exports.putlikepost = (req, res) => {
 
 exports.mostliked = async (req, res) => {
   try {
-    let posts = await PostModel.find().sort({ likes: -1 });
+    let posts = await Post.find().sort({ likes: -1 });
     res.json(posts);
   } catch (error) {
     console.error(error);
@@ -148,139 +234,73 @@ exports.getpostbydate = async (req, res) => {
   }
 };
 
-//------------------------------comment------------------------------------------
+
 
 //--------addcomment----------------
 
-exports.aadComment = async (req, res) => {
-  try {
-    let post = await PostModel.findById(req.params.post_id);
-    let user = await UserModel.findById(req.user.id).select("-password");
+// exports.aadComment = async (req, res) => {
+//   try {
+//     let post = await PostModel.findById(req.params.post_id);
+//     let user = await UserModel.findById(req.user.id).select("-password");
 
-    const { textOfTheComment } = req.body;
-    const errors = validationResult(req);
-    if (!errors.isEmpty())
-      return res.status(400).json({ errors: errors.array() });
+//     const { textOfTheComment } = req.body;
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty())
+//       return res.status(400).json({ errors: errors.array() });
 
-    if (!user) return res.status(404).json("User not found");
+//     if (!user) return res.status(404).json("User not found");
 
-    if (!post) return res.status(404).json("Post not found");
+//     if (!post) return res.status(404).json("Post not found");
 
-    let newComment = {
-      textOfTheComment,
-      name: user.firstname,
-      avatar: user.avatar,
-    };
-    post.comments.unshift(newComment);
+//     let newComment = {
+//       textOfTheComment,
+//       name: user.firstname,
+//       avatar: user.avatar,
+//     };
+//     post.comments.unshift(newComment);
 
-    await post.save();
+//     await post.save();
 
-    res.json("Comment is added");
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json("Server Error...");
-  }
-};
+//     res.json("Comment is added");
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json("Server Error...");
+//   }
+// };
 
 //------getmostpostcommented-----------------------------
 
-exports.mostcommented = async (req, res) => {
-  try {
-    let posts = await PostModel.find().sort({ comments: -1 });
-    res.json(posts);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json("Server Error...");
-  }
-};
+// exports.mostcommented = async (req, res) => {
+//   try {
+//     let posts = await PostModel.find().sort({ comments: -1 });
+//     res.json(posts);
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json("Server Error...");
+//   }
+// };
 
 //-----------removecomment--------------------------------
 
-exports.removecomment = async (req, res) => {
-  try {
-    let post = await PostModel.findById(req.params.post_id);
-
-    if (!post) return res.status(404).json("Post not found");
-
-    const removeCommentFromComments = post.comments.filter(
-      (comment) => comment._id.toString() !== req.params.comment_id
-    );
-
-    post.comments = removeCommentFromComments;
-
-    await post.save();
-
-    res.json(post);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json("Server Error...");
-  }
-};
-
-//-------------------------------------------------------------------
-// exports.multipleFileUpload = async (req, res, next) => {
-//   try{
-//     let filesList = req.files.map((file) =>(path = `${req.protocol}://${req.hostname}:4000/uploads/${file.filename}`)   )
-//       // let filesArray = [];
-//       // req.files.forEach(element => {
-//       //     const file = {
-//       //         fileName: element.originalname,
-//       //         filePath: element.path,
-//       //         fileType: element.mimetype,
-//       //         fileSize: fileSizeFormatter(element.size, 2)
-//       //     }
-//       //     filesArray.push(file);
-      
-//       const post = new Post({
-//           title: req.body.title,
-//           discription: req.body.discription,
-//           files: filesList 
-//       });
-//       await post.save();
-//       res.status(201).send('Files Uploaded Successfully');
-//   }catch(error) {
-//       res.status(400).send(error.message);
-//   }
-// }
-
-// const fileSizeFormatter = (bytes, decimal) => {
-//   if(bytes === 0){
-//       return '0 Bytes';
-//   }
-//   const dm = decimal || 2;
-//   const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'YB', 'ZB'];
-//   const index = Math.floor(Math.log(bytes) / Math.log(1000));
-//   return parseFloat((bytes / Math.pow(1000, index)).toFixed(dm)) + ' ' + sizes[index];
-
-// }
-// module.exports.insert = async (req, res) => {
-//   let fileName;
-
-//   if (req.file !== null) {
-   
-//     fileName = req.body.file + Date.now() + ".jpg";
-
-//     await pipeline(
-//       req.file.stream,
-//       fs.createWriteStream(
-//         `${__dirname}/./uploads/${fileName}`
-//       )
-//     );
-//   }
-
-//   const newPost = new Post({
-//     title: req.body.title,
-//     discription:req.body.discription,
-//     picture: req.file !== null ? "./uploads" + fileName : "",
-//     video: req.body.video,
-//     likers: [],
-//     comments: [],
-//   });
-
+// exports.removecomment = async (req, res) => {
 //   try {
-//     const post = await newPost.save();
-//     return res.status(201).json(post);
-//   } catch (err) {
-//     return res.status(400).send(err);
+//     let post = await PostModel.findById(req.params.post_id);
+
+//     if (!post) return res.status(404).json("Post not found");
+
+//     const removeCommentFromComments = post.comments.filter(
+//       (comment) => comment._id.toString() !== req.params.comment_id
+//     );
+
+//     post.comments = removeCommentFromComments;
+
+//     await post.save();
+
+//     res.json(post);
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json("Server Error...");
 //   }
 // };
+
+//-------------------------------------------------------------------

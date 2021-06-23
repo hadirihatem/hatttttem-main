@@ -1,22 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { ListItem, ListItemText, ListItemAvatar, Avatar, TextField, Button } from '@material-ui/core';
-import {useDispatch, useSelector} from 'react-redux'
-import axios from 'axios'
-import SendIcon from '@material-ui/icons/Send';
+import React from 'react'
+import { useSelector} from 'react-redux'
+
 
 
 
 const Comments = (props) => {
-const auth = useSelector((state) => state.auth)
 
-
-
-
- 
-
- 
-
-  
 
     return (
         <div>

@@ -126,7 +126,7 @@ exports.list = (req, res) => {
           .send("groupe not found, retry with a valid GroupeId.")
       );
   }
-  ProjectModel.list(page).then((result) => {
+  Groupe.list(page).then((result) => {
     res.status(200).send({
       code: 200,
       status: "success",

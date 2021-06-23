@@ -6,6 +6,7 @@ import {
   GETBYDATE,
   MOST_LIKED_POST,
   LIKEPOST_ERROR,
+  
 } from "../action/type";
 let initState = {
   posts: [],
@@ -20,9 +21,11 @@ const PostReducer = (state = initState, action) => {
     case ADDPOST_SUCCESS:
     case GET_POST:
     case GETBYDATE:
+    
       return {
         ...state,
         post: action.payload,
+       
         errors: {},
         isLoading: false,
         
@@ -36,6 +39,14 @@ const PostReducer = (state = initState, action) => {
         isLoading: false,
      
       };
+      // case ADDLIKE_SUCCESS:
+      //   // let index=state.posts.findIndex((post)=>post.postId===action.payload.postId);
+      //   // state.posts[index]=action.payload;
+      //   const modifyPost = state.posts.find(post=> post.postId == action.id)
+      //   return{
+      //     ...state,
+      //     posts:[state.posts,action.payload]
+      //   }
 
     case ADDPOST_FAIL:
     case LIKEPOST_ERROR:

@@ -5,8 +5,6 @@ const authmidllwares = require("../../midllwares/auth/authmidllwares");
 const initializePutRoutes = (app) => {
   app.put("/post/:postId", [authmidllwares, postcontroller.putpost]);
 
-  app.put("/comment/:postId", [
-    body("textOfTheComment", "Text is empty").not().isEmpty(), authmidllwares, postcontroller.aadComment, ]);
   app.put("/postlike/:postId",[authmidllwares,postcontroller.putlikepost]);
 };
 
