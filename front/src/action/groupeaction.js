@@ -5,8 +5,10 @@ import {
     GETGROUPE_FAIL,
     UPDATEGROUPE_SUCCESS,
     UPDATEGROUPE_FAIL,
+    GETGROUPES_SUCCESS,
+    GETGROUPES_FAIL
 
-} from ('./type')
+} from './type'
 import axios from "axios";  
 import setToken from "../setToken";
 
@@ -14,12 +16,10 @@ import setToken from "../setToken";
 
 export const creategroupe=(data)=>(dispatch)=>{
     setToken()
-    axios.post("/groupe/create",data)
+    console.log(data)
+    axios.post("http://localhost:4000/groupe/create",data)
     .then((res) =>
-    dispatch({
-      type: CREATEGROUPE_SUCCESS,
-      payload: res.data,
-    })
+    dispatch(getgroupes())
   )
   .catch((err) =>
     dispatch({
@@ -28,7 +28,27 @@ export const creategroupe=(data)=>(dispatch)=>{
     })
   );
 }
+//-----------------------------
 
+export const getgroupes = () => (dispatch) => {
+  setToken();
+  axios
+    .get(`http://localhost:4000/groupes`)
+    .then((res) =>
+      dispatch({
+        type: GETGROUPES_SUCCESS,
+        payload: res.data.data,
+      })
+    )
+    .catch((err) =>
+      dispatch({
+        type: GETGROUPES_FAIL,
+        payload: err.response.data.msg,
+      })
+    );
+};
+
+//----------------------------
 export const getgroupe = (id) => (dispatch) => {
     setToken();
     axios

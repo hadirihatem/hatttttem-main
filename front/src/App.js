@@ -11,7 +11,7 @@ import Profile from "./pages/Profile"
 import Groupe from './pages/Group'
 import Postnew from "./pages/Postnew";
 import { SliderImg } from './pages/SliderImg';
-
+import Groupepost from "./pages/Groupepost"
 
 
 function App() {
@@ -28,7 +28,8 @@ function App() {
           <PrivetRoute exact path="/feed" component={Feed} />
           <PrivetRoute exact path="/Groupe" component={Groupe}/>
            <PrivetRoute exact path="/Post" component={Postnew}/>
-        
+
+           <PrivetRoute exact path="/Groupe/:id" component={Groupepost}/>
 
         </switch>
       </Router>

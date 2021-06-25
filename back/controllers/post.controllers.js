@@ -103,15 +103,12 @@ exports.putlikepost = async (req, res) => {
       
       if (!search) {
         console.log('true')
-        const newPost = await Post.findByIdAndUpdate(req.params.postId,{ likers:[req.userId]});
+        const newPost = await Post.findByIdAndUpdate(req.params.postId,{ likers:[...post.likers,req.userId]});
         res.status(200).json(newPost.likers);
-
       } 
-      
       else {
         console.log('false')
         const newPost = await Post.findByIdAndUpdate(req.params.postId,{ $pull: { likers: req.userId}});
-
         // await post.updateOne({ $pull: { likers: req.userId } });
         res.status(200).json(newPost.likers);
       }

@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Form } from "react-bootstrap";
-import Modal from "react-modal";
-import { Button } from "./Button";
-import './Button.css'
 import "../App.css";
 import { loadUser } from "../action/authaction";
-import PostList from "./PostList";
-import {addPost}from "../action/postaction"
-import './Posts.css'
 
+import GroupesList from "./GroupesList";
+
+import { Button, Modal } from "react-bootstrap";
+
+import { creategroupe } from "../action/groupeaction";
 
 const customStyles = {
   content: {
@@ -25,83 +23,65 @@ const customStyles = {
 const Group = () => {
   
 
-  const [file, setFile] = useState();
-
-
-
-    const dispatch = useDispatch();
-
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const auth = useSelector((state) => state.auth);
+
   useEffect(() => {
     if (!auth.user) dispatch(loadUser());
   }, [dispatch, auth.user]);
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  function openModal() {
-    setModalIsOpen(true);
-  }
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
-
-  const [NewPost, setNewPost] = useState({
-    title: "",
-    discription: "",
+  const [NewGroupe, setNewGroupe] = useState({
+    Name: "",
+    theme: "",
     
   });
-  const handlefile=(e)=>{
-    setFile(e.target.files[0])
-  }
   const handleChange = (e) => {
-    setNewPost({
-      ...NewPost,
+    setNewGroupe({
+      ...NewGroupe,
       [e.target.name]: e.target.value,
     });
   };
- 
+
+  const [show, setShow] = useState(false);
 
   const handleClose = (e) => {
-    e.preventDefault();
-    dispatch(addPost({...NewPost,owner:auth.user._id},file));
-
-
-    closeModal();
+   
+    dispatch(creategroupe({ ...NewGroupe }));
+    setShow(false);
   };
+  const handleShow = () => setShow(true);
   
     return (
         <div>
-        <Button variant="outline-info" onClick={openModal} className="btns"
-                      buttonStyle="btn--primary"
-                      buttonSize="btn--large">
-        ADD
+        <Button variant="primary" onClick={handleShow}>
+        Launch demo modal
       </Button>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
-      >
-        <Form>
-          <label style={{ marginRight: 10 }}>Title</label>
+      <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Modal heading</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <label style={{ marginRight: 10 }}>name </label>
 
-          <input type="text" name="title" onChange={handleChange} />
+        <input type="text" name="Name" onChange={handleChange} />
 
-          <br />
+        <br />
 
-          <label style={{ marginRight: 10 }}>Discription</label>
+        <label style={{ marginRight: 10 }}>theme </label>
 
-          <input type="text" name="discription" onChange={handleChange} />
-          <br />
-
-          <label style={{ marginRight: 10 }}>picture</label>
-
-          <input type="file" name="picture"  onChange={handlefile} />
-        </Form>
-
-        <Button variant="outline-info" onClick={handleClose}>
-          submision
+        <input type="text" name="theme" onChange={handleChange} />
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
         </Button>
-      </Modal>
-      <PostList></PostList>
+        <Button variant="primary" onClick={handleClose}>
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
+      <GroupesList/>
         </div>
     )
 }

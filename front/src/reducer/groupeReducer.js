@@ -2,24 +2,30 @@ import {
   GETGROUPE_FAIL,
   GETGROUPE_SUCCESS,
   CREATEGROUPE_FAIL,
-  CREATEGROUPE_SUCCESS,
+  
   UPDATEGROUPE_FAIL,
   UPDATEGROUPE_SUCCESS,
+  GETGROUPES_FAIL,
+  GETGROUPES_SUCCESS,
 } from "../action/type";
 
 let initState = {
-  groupe=null
+  groupes:[],
+  groupe:{},
 };
 
 const groupeReducer = (state = initState, action) => {
-  switch (action.payload) {
-case CREATEGROUPE_SUCCESS:
+  switch (action.type){
+  case GETGROUPES_SUCCESS:
+    return{
+      ...state,
+      groupes:action.payload,
+    }
+case GETGROUPE_SUCCESS:
   return{
     ...state,
     groupe:action.payload
   }
-
-
 
 
     default:

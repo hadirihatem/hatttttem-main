@@ -18,7 +18,10 @@ const Postschema= new mongoose.Schema({
         type:Date,
         default:Date.now
     },
-
+groupe:{
+  type:mongoose.Types.ObjectId,
+  ref:"Groupe"
+},
     likers:{
       type:[{
         type:mongoose.Types.ObjectId,

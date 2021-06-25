@@ -14,7 +14,8 @@ exports.createPost = async (req, res) => {
       picture: path,
       likers: [],
       comments: [],
-     owner:myBody.owner
+     owner:myBody.owner,
+     groupe:myBody.groupe
     });
   
     try {

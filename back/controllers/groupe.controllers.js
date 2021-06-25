@@ -3,7 +3,8 @@ var Groupe = require("../models/Groupe");
 //----------------create groupe ------------
 
 exports.insert = (req, res) => {
-  Groupe.createGroupe(req.body).then((groupe) => {
+  
+  Groupe.createGroupe(req.body,req.userId).then((groupe) => {
     groupe != undefined ? res.status(201).send({ msg: "groupe created successfuly" }) : res.status(400).send({ msg: "invalid groupe" });
   });
 };
@@ -12,7 +13,7 @@ exports.insert = (req, res) => {
 
 exports.getById = (req, res) => {
   Groupe.findById(req.params.groupeId)
-    .then(() => res.send(groupe))
+    .then((groupe) => res.send(groupe))
     .catch((err) => {
       console.log(err.message);
       res.status(500).json({ msg: "Server Error" });
@@ -54,8 +55,21 @@ exports.removeById = (req, res) => {
 
 
 //------------------------------
+exports.list=(req,res)=>{
+  Groupe.list(page)
+  then(() => {
+    res.status(200).send([
+      {
+        msg: "get groupes",
+      },
+    ]);
+  })
+  .catch(() =>
+    res.status(404).send("groupe not found, retry with a valid groupeId.")
+  );
+}
 
-
+//--------------------------
 
 
 
