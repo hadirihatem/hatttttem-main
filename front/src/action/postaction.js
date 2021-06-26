@@ -10,7 +10,9 @@ import {
   LIKEPOST_ERROR,
   GETBYDATE,
   GETCOMMENT_FAIL,
-  GETCOMMENT_SUCCESS
+  GETCOMMENT_SUCCESS,
+  POSTDELETED_SUCCESS,
+  POSTDELETED_FAIL,
 } from "./type";
 import axios from "axios";
 import setToken from "../setToken";
@@ -104,6 +106,7 @@ export const getComments =(postId)=>(dispatch)=>{
 //----------addliketopost---------------------
 
 export const addliketopost = (postId) => (dispatch) => {
+  console.log(postId)
 setToken()
   axios
     .put(`http://localhost:4000/postlike/${postId}`)
@@ -135,21 +138,23 @@ export const postmostiked = () => (dispatch) => {
     );
 };
 
-
-//----------------on drop ------------------
-
+//----------deletepost-----
 
 
-// export const onDrop =(files)=>{
-//   let formData = new formData ();
-//   const config ={
-//   header : {'content-type' :'multipart/form-data'}
-//   }
-//  formData.append("file",files[0])
-//  axios.post ('http://localhost:4000/post/multer',formData, config)
-//  .then (res=>{
-//      if (res.data.success){
 
-//      }else{alert ('failed to save the upload in server')}
-//  })
-// }
+export const deletepost = (postId) => (dispatch) => {
+  
+  axios
+    .delete(`http://localhost:4000/post/${postId}`)
+    .then((res) => {
+      
+      dispatch({ type: POSTDELETED_SUCCESS, payload: res.data });
+    })
+
+    .catch((err) =>
+      dispatch({
+        type: POSTDELETED_FAIL,
+        payload: err.response.data.msg,
+      })
+    );
+};

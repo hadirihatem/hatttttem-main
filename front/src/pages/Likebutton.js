@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector ,useDispatch} from 'react-redux';
 import { addliketopost } from '../action/postaction';
+import {HeartOutlined} from "@ant-design/icons"
 
 const Likebutton = ({post}) => {
     const [liked, setLiked] = useState(false);
@@ -32,7 +33,8 @@ const Likebutton = ({post}) => {
     return (
         <div>
         
-          <img src="./images/heart.svg" style={{backgroundColor:liked? 'red':'black'}} onClick={like} alt="like" />
+         
+          <HeartOutlined  style={{Color:liked? 'red':'black' , }} onClick={like} alt="like" />
           <span>{post.likers.length}</span>
         </div>
     )

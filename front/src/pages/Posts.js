@@ -26,6 +26,9 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import './Posts.css'
+import DeleteBpost from './DeleteBpost';
+import { deletepost } from '../action/postaction';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -57,11 +60,14 @@ const Posts = ({ post }) => {
   };
   const classes = useStyles();
 
-  console.log(post)
   const auth = useSelector((state) => state.auth);
   const  [comments,setComments]= useState(null)
   const [error, setError] = useState(null)
   const dispatch = useDispatch();
+
+
+
+
   const refreshComment = ()=>{
   
     axios.get("http://localhost:4000/api/comment/getComments/"+post._id)
@@ -76,7 +82,11 @@ useEffect(() => {
   .catch ((err)=>setError(err.response.data))
   }, [])
 
-
+// useEffect((e) => {
+// if(auth.user){
+//   dispatch(deletepost(post._id==auth.user._id))
+// }
+// }, [])
 
 
   // const updateComment = (newComment) => {
@@ -100,7 +110,7 @@ useEffect(() => {
   }
   action={
     <IconButton aria-label="settings">
-      <MoreVertIcon />
+   <DeleteBpost />
     </IconButton>
   }
   title={`${post.owner.firstname} ${post.owner.lastname}`}
