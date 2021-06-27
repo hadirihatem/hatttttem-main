@@ -1,10 +1,8 @@
 import {
-  
   ADDCOOMENT_FAIL,
   ADDPOST_FAIL,
   GETPOSTS,
   GET_POST,
-  
   ADDLIKE_FAIL,
   MOST_LIKED_POST,
   LIKEPOST_ERROR,
@@ -13,6 +11,8 @@ import {
   GETCOMMENT_SUCCESS,
   POSTDELETED_SUCCESS,
   POSTDELETED_FAIL,
+  POSTUPDATED_SUCCESS,
+  POSTUPDATED_FAIL,
 } from "./type";
 import axios from "axios";
 import setToken from "../setToken";
@@ -38,7 +38,6 @@ export const getpost = (post_id) => (dispatch) => {
   });
 };
 
-
 //-----------getpostbydate------------------
 
 export const getpostbydate = () => (dispatch) => {
@@ -52,14 +51,14 @@ export const getpostbydate = () => (dispatch) => {
 
 //-------------------aadpost----------------
 
-export const addPost = (data,file) => (dispatch) => {
-  console.log(data,file)
+export const addPost = (data, file) => (dispatch) => {
+  console.log(data, file);
   // const formData= new FormData();
   // formData.append('picture',file);
   // formData.append('data',JSON.stringify(data));
   let formData = new FormData();
-  formData.append('picture', file);
-  formData.append('data', JSON.stringify(data));
+  formData.append("picture", file);
+  formData.append("data", JSON.stringify(data));
   axios
     .post("http://localhost:4000/post/create", formData)
     .then((res) => dispatch(getPosts()))
@@ -87,31 +86,32 @@ export const addcomment = (data) => (dispatch) => {
     );
 };
 
-export const getComments =(postId)=>(dispatch)=>{
-  axios.get("http://localhost:4000/api/comment/getComments/"+postId)
-  .then((res) => {
-    dispatch(getpost(postId));
-    dispatch({
-      type:GETCOMMENT_SUCCESS,
-      payload: res.data
+export const getComments = (postId) => (dispatch) => {
+  axios
+    .get("http://localhost:4000/api/comment/getComments/" + postId)
+    .then((res) => {
+      dispatch(getpost(postId));
+      dispatch({
+        type: GETCOMMENT_SUCCESS,
+        payload: res.data,
+      });
     })
-  })
-  .catch((err) =>
-  dispatch({
-    type: GETCOMMENT_FAIL,
-    payload: err.response.data.msg,
-  })
-);
-}
+    .catch((err) =>
+      dispatch({
+        type: GETCOMMENT_FAIL,
+        payload: err.response.data.msg,
+      })
+    );
+};
 //----------addliketopost---------------------
 
 export const addliketopost = (postId) => (dispatch) => {
-  console.log(postId)
-setToken()
+  console.log(postId);
+  setToken();
   axios
     .put(`http://localhost:4000/postlike/${postId}`)
     .then((res) => {
-      return dispatch(getPosts())
+      return dispatch(getPosts());
     })
     .catch((err) =>
       dispatch({
@@ -140,15 +140,13 @@ export const postmostiked = () => (dispatch) => {
 
 //----------deletepost-----
 
-
-
 export const deletepost = (postId) => (dispatch) => {
-  
+  setToken();
   axios
     .delete(`http://localhost:4000/post/${postId}`)
     .then((res) => {
-      
       dispatch({ type: POSTDELETED_SUCCESS, payload: res.data });
+      dispatch(getPosts());
     })
 
     .catch((err) =>
@@ -157,4 +155,23 @@ export const deletepost = (postId) => (dispatch) => {
         payload: err.response.data.msg,
       })
     );
+};
+
+//------updatepost------------------------
+
+export const updatepost = (postId,data) => (dispatch) => {
+ 
+  axios.put(`http://localhost:4000/post/${postId}`,data)
+  .then((res) => {
+    dispatch({
+      type: POSTUPDATED_SUCCESS,
+      payload: res.data,
+    });
+    dispatch(getPosts());
+  }).catch((err) => {
+    dispatch({
+      type: POSTUPDATED_FAIL,
+      payload: err.response.data.msg,
+    });
+  });
 };

@@ -9,26 +9,46 @@ export const LOAD_USER_FAIL = " LOAD_USER_FAIL";
 
 export const LOGOUT = "LOGOUT";
 
+
+
+//------------------POST-------------------
+
 export const ADDPOST_SUCCESS = "ADDPOST_SUCCESS";
 export const ADDPOST_FAIL = "ADDPOST_FAIL";
 
 export const POSTDELETED_SUCCESS = "POSTDELETED_SUCCESS";
 export const POSTDELETED_FAIL = "POSTDELETED_FAIL";
 
+export const POSTUPDATED_SUCCESS = "POSTUPDATED_SUCCESS";
+export const POSTUPDATED_FAIL = "POSTUPDATED_FAIL";
+
+
 export const GETPOSTS = "GETPOSTS";
 export const GET_POST = "GET_POST";
 export const GETBYDATE = "GETBYDATE";
+
+
+
+//------------COMMENT--------------------------------
+
 
 export const ADDCOMMENT_SUCCESS = "AADCOMMENT_SUCCESS";
 export const ADDCOOMENT_FAIL = "AADCOOMENT_FAIL";
 export const GETCOMMENT_FAIL = "GETCOMMENTS_FAIL";
 export const GETCOMMENT_SUCCESS = "GETCOMMENT_SUCCESS";
 
+//---------------AADLIKE-----------------------
+
+
 export const ADDLIKE_SUCCESS = "AADLIKE_SUCCESS";
 export const ADDLIKE_FAIL = "AADLIKE_FAIL";
 
 export const MOST_LIKED_POST = "MOST_LIKED_POST";
 export const LIKEPOST_ERROR = "LIKEPOST_ERROR";
+
+//--------------------USER----------------------
+
+
 
 export const GET_USER_ERRORS = "  GET_USER_ERRORS";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
@@ -38,6 +58,13 @@ export const UPDATEUSER_SUCCES = "UPDATEUSER_SUCCES";
 export const UPDATEUSER_FAIL = "UPDATEUSER_FAIL";
 export const GETUSERS_SUCCESS = "GETUSERS_SUCCESS";
 export const GETUSERS_FAIL = "GETUSERS_FAIL";
+
+
+
+
+//--------------GROUPE-------------------
+
+
 
 export const CREATEGROUPE_SUCCESS = "CREATEGROUPE_SUCCESS";
 export const CREATEGROUPE_FAIL = "CREATEGROUPE_FAIL";

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
 import Grid from '@material-ui/core/Grid';
 // import { makeStyles } from '@material-ui/core/styles';
-import { deletepost } from '../action/postaction';
+import { deletepost, getPosts } from '../action/postaction';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -22,16 +22,17 @@ const DeleteBpost = ({post}) => {
 
 
     // useEffect(() => {
-    //     if (post._id.find(delet=>delet == (user._id))) setDelete(true);
+    //     if (post.find(delet=>delet == (post.owner._id))) setDelete(true);
     //     else setDelete(false);
-    //   }, [user._id, post.id, Delete]);
+    //   }, [post.owner._id, post, Delete]);
+
 
 
     const handledelete=(e)=>{
-        e.preventDefault()
-        dispatch(deletepost())
+    if(auth.user._id==post.owner._id)
+        dispatch(deletepost(post._id))
+        setDelete(true)
       }
-
 
   
     return (

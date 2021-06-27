@@ -19,6 +19,7 @@ const Groupepost = ({match}) => {
 
     return (
         <div>
+        
         <Modalgroupe groupeId={match.params.id}/>
             <h1>{groupe.Name}</h1>
             {newPosts.map(post => <Posts post={post}/>)}
