@@ -1,4 +1,5 @@
 var Groupe = require("../models/Groupe");
+const GroupeModel = require("../models/GroupeModel");
 
 //----------------create groupe ------------
 
@@ -146,4 +147,33 @@ exports.list = (req, res) => {
       data: result,
     });
   });
+};
+
+
+//-----------putsub-------------
+
+exports.putsub = async (req, res) => {
+   
+  try {
+    const groupe = await Groupe.findById(req.params.groupeId);
+    if (!groupe) return res.status(404).json("Groupe not found")
+    console.log(groupe.subvalid)
+   
+    const search = groupe.subvalid.find(sub=>sub == req.userId)
+    
+    if (!search) {
+      console.log('true')
+      const newgroupe = await GroupeModel.findByIdAndUpdate(req.params.groupeId,{ subvalid:[...groupe.subvalid,req.userId]});
+      res.status(200).json(newgroupe.subvalid);
+    } 
+    else {
+      console.log('false')
+      const newgroupe = await GroupeModel.findByIdAndUpdate(req.params.groupeId,{ $pull: { subvalid: req.userId}});
+      // await groupe.updateOne({ $pull: { subvalid: req.userId } });
+      res.status(200).json(newgroupe.subvalid);
+    }
+   
+  } catch (err) {
+    res.status(500).json(err); 
+  }
 };

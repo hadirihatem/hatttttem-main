@@ -9,6 +9,7 @@ import { updatepost } from "../action/postaction";
 
 const EditPost = ({post}) => {
   const dispatch = useDispatch()
+  const auth = useSelector(state => state.auth)
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState("Content of the modal");
@@ -23,6 +24,8 @@ const EditPost = ({post}) => {
   };
 
   const handleOk = (e) => {
+    if(auth.user._id==post.owner._id)
+
     dispatch(updatepost(post._id,changepost,file))
     setModalText("The modal will be closed after two seconds");
     setConfirmLoading(true);
@@ -45,6 +48,7 @@ const EditPost = ({post}) => {
   };
 
   const handleChange =(e)=>{
+   
     setChangepost({...changepost, [e.target.name]:e.target.value})
     console.log(changepost)
   }
@@ -61,7 +65,7 @@ const EditPost = ({post}) => {
       > 
         <Input placeholder={post.title} value={changepost.title} name="title" onChange={handleChange} />
         <Input placeholder={post.discription} value={changepost.discription} name='discription' onChange={handleChange} />
-        <Input type='file' onChange={(e)=>setFile(e.target.files[0])} />
+        <Input type='file' onChange={(e)=> setFile(e.target.files[0])} />
         {/* <Upload {...props} >
           <Button icon={<UploadOutlined />} >Click to Upload</Button>
         </Upload> */}

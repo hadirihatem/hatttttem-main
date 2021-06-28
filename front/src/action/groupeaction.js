@@ -6,7 +6,8 @@ import {
     UPDATEGROUPE_SUCCESS,
     UPDATEGROUPE_FAIL,
     GETGROUPES_SUCCESS,
-    GETGROUPES_FAIL
+    GETGROUPES_FAIL,
+    ADDSUB_FAIL,
 
 } from './type'
 import axios from "axios";  
@@ -86,3 +87,22 @@ export const updategroupe = (id) => (dispatch) => {
       );
   };
 
+
+
+  //---------------putsub----------
+
+  export const addsub = (groupeId) => (dispatch) => {
+    console.log(groupeId);
+    setToken();
+    axios
+      .put(`http://localhost:4000/postlike/${groupeId}`)
+      .then((res) => {
+        return dispatch(getgroupes());
+      })
+      .catch((err) =>
+        dispatch({
+          type: ADDSUB_FAIL,
+          payload: err.response.data.msg,
+        })
+      );
+  };

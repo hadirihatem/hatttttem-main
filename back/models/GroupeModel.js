@@ -6,6 +6,14 @@ const GroupeSchema = new mongoose.Schema({
     ref:"User",
     required: true,
   },
+  subvalid :{
+    type:[{
+      type:mongoose.Types.ObjectId,
+      ref:"User"
+     }],
+    default:[],
+    },
+    subscribe:[String],
   users:[String],
   Name: String,
    avatar: String,
