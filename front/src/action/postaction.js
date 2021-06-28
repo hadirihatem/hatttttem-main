@@ -13,6 +13,7 @@ import {
   POSTDELETED_FAIL,
   POSTUPDATED_SUCCESS,
   POSTUPDATED_FAIL,
+  
 } from "./type";
 import axios from "axios";
 import setToken from "../setToken";
@@ -159,9 +160,12 @@ export const deletepost = (postId) => (dispatch) => {
 
 //------updatepost------------------------
 
-export const updatepost = (postId,data) => (dispatch) => {
- 
-  axios.put(`http://localhost:4000/post/${postId}`,data)
+export const updatepost = (postId,data,file) => (dispatch) => {
+  let formData = new FormData();
+  formData.append("picture", file);
+  formData.append("data", JSON.stringify(data));
+
+  axios.put(`http://localhost:4000/post/${postId}`,formData)
   .then((res) => {
     dispatch({
       type: POSTUPDATED_SUCCESS,
@@ -175,3 +179,6 @@ export const updatepost = (postId,data) => (dispatch) => {
     });
   });
 };
+
+
+

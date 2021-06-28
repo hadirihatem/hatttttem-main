@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { uploadPicture } from "../action/useraction";
+
+
+
+
 const UploadImg = () => {
   const [file, setFile] = useState();
   const dispatch = useDispatch();
@@ -15,6 +19,8 @@ const UploadImg = () => {
     dispatch(uploadPicture(data, user._id));
   };
 
+  
+
   return (
     <form  onSubmit={handlePicture}>
       <label >Changer d'image</label>
@@ -27,6 +33,8 @@ const UploadImg = () => {
       />
       <br/>
       <input type="submit" value="Envoyer" />
+
+
     </form>
   );
 };

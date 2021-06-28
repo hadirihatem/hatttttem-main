@@ -76,7 +76,9 @@ exports.removeById = (req, res) => {
 
 
 exports.putpost = (req, res) => {
-  PostModel.putPost(req.params.postId, req.body)
+  let myBody=JSON.parse(req.body.data)
+  let path = `http://localhost:4000/uploads/${req.file.filename}`;
+  PostModel.putPost(req.params.postId,{...myBody,picture:path})
     .then((result) => {
       res.status(200).send({
         code: 200,

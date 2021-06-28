@@ -1,3 +1,4 @@
+
 import BorderColorIcon from "@material-ui/icons/BorderColor";
 import React, { useState } from "react";
 import {useDispatch,useSelector} from 'react-redux'
@@ -11,10 +12,10 @@ const EditPost = ({post}) => {
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState("Content of the modal");
+  const [file, setFile] = useState(post.picture)
   const [changepost, setChangepost] = useState({
     title: post.title,
     discription:post.discription,
-    picture: post.picture,
   });
   const showModal = (e) => {
     setChangepost({ ...changepost, [e.target.name]: e.target.value })
@@ -22,7 +23,7 @@ const EditPost = ({post}) => {
   };
 
   const handleOk = (e) => {
-    dispatch(updatepost(post._id,changepost))
+    dispatch(updatepost(post._id,changepost,file))
     setModalText("The modal will be closed after two seconds");
     setConfirmLoading(true);
     setTimeout(() => {
@@ -43,7 +44,10 @@ const EditPost = ({post}) => {
     },
   };
 
-  
+  const handleChange =(e)=>{
+    setChangepost({...changepost, [e.target.name]:e.target.value})
+    console.log(changepost)
+  }
 
   return (
     <div>
@@ -55,14 +59,15 @@ const EditPost = ({post}) => {
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
       > 
-        <Input placeholder={post.title}  />
-        <Input placeholder={post.discription} />
-        <Upload {...props}>
-          <Button icon={<UploadOutlined />}>Click to Upload</Button>
-        </Upload>
+        <Input placeholder={post.title} value={changepost.title} name="title" onChange={handleChange} />
+        <Input placeholder={post.discription} value={changepost.discription} name='discription' onChange={handleChange} />
+        <Input type='file' onChange={(e)=>setFile(e.target.files[0])} />
+        {/* <Upload {...props} >
+          <Button icon={<UploadOutlined />} >Click to Upload</Button>
+        </Upload> */}
       </Modal>
     </div>
   );
 };
 
-export default EditPost;
+export default EditPost
