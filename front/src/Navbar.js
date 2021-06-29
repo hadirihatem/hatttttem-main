@@ -61,6 +61,15 @@ const Navbar = () => {
                     Groupe
                   </Link>
                 </li>
+                <li className="nav-Item">
+                <Link
+                  to="/GroupeAdmin"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                GroupeAdmin
+                </Link>
+              </li>
 
                 <li className="nav-Item">
                   <Link

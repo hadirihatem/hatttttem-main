@@ -95,7 +95,7 @@ export const updategroupe = (id) => (dispatch) => {
     console.log(groupeId);
     setToken();
     axios
-      .put(`http://localhost:4000/postlike/${groupeId}`)
+      .put(`http://localhost:4000/putsub/${groupeId}`)
       .then((res) => {
         return dispatch(getgroupes());
       })
