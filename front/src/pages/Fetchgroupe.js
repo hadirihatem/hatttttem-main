@@ -1,14 +1,20 @@
 import React from 'react'
 import GroupeAdmin from './GroupeAdmin'
 import { Link } from "react-router-dom";
-
+import './Groupes.css'
 const Fetchgroupe = ({groupe}) => {
   
     console.log(groupe)
     return (
-        <div>
+        <div className="wrapper">
+        <div className="card">
+        
+            
+          <img src="/images/camp1.jpg"/>
+          <div className="info">
          <Link to={`/GroupeAdmin/${groupe._id}`}>  <p> {groupe.Name&&groupe.theme}</p> </Link>
-     
+         </div>
+        </div>
         </div>
     )
 }
