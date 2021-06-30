@@ -195,45 +195,34 @@
 // }
 // export default GroupeAdmin ;
 
+import Fetchgroupe from './Fetchgroupe'
 
-
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Table } from 'antd';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUsersList } from '../action/useraction';
+import { getgroupeadmin } from '../action/groupeaction';
 
-  const columns = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: 'Phone',
-      dataIndex: 'phone',
-      key: 'phone',
-    },
-    {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
-    },
-  ];
+ 
+
 
 const GroupeAdmin = ({groupe}) => {
-    const  auth = useSelector(state => state.auth.user)
-    const data = [];
-for (let i = 0; i < 100; i++) {
-  data.push({
-    key: i,
-    name: `${auth.firstname}-${auth.lastname}${i}`,
-    phone: `${auth.phone}`,
-    email: `${auth.email} ${i}`,
-  });
-}
+const dispatch = useDispatch()
+const admingroupe = useSelector(state => state.auth.user._id)
+const gadmin = useSelector(state => state.gadmin.groupes)
+
+useEffect(() => {
+  dispatch(getgroupeadmin(admingroupe))
+  }
+, [])
+
+   
    
     return (
+
         <div>
-        <Table dataSource={data} columns={columns} />;
+       {gadmin && gadmin.map(groupe=><Fetchgroupe groupe={groupe}/>) }
+       
         </div>
     )
 }

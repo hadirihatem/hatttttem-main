@@ -13,6 +13,7 @@ import Postnew from "./pages/Postnew";
 import { SliderImg } from "./pages/SliderImg";
 import Groupepost from "./pages/Groupepost";
 import GroupeAdmin from "./pages/GroupeAdmin";
+import Tablegroupeadmin from "./pages/Tablegroupeadmin"
 
 function App() {
   return (
@@ -32,6 +33,8 @@ function App() {
           <PrivetRoute exact path="/Groupe" component={Groupe} />
           <PrivetRoute exact path="/Post" component={Postnew} />
           <PrivetRoute exact path="/GroupeAdmin" component={GroupeAdmin} />
+          <PrivetRoute exact path="/GroupeAdmin/:id" component={Tablegroupeadmin} />
+
           <PrivetRoute exact path="/Groupe/:id" component={Groupepost} />
         </switch>
       </Router>

@@ -36,7 +36,8 @@ exports.findByName = (name) => {
 
 exports.findBygroupeAdmin = (groupeAdmin) => {
   return new Promise((resolve, reject) => {
-    Groupe.find({ groupeAdmin: groupeAdmin }).exec(function (err, groupe) {
+    Groupe.find({ groupeAdmin: groupeAdmin }).populate("subvalid")
+    .exec(function (err, groupe) {
       if (err) {
         reject(err);
       } else {

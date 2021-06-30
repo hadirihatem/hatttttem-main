@@ -8,7 +8,8 @@ import {
     GETGROUPES_SUCCESS,
     GETGROUPES_FAIL,
     ADDSUB_FAIL,
-
+    GETGROUPEADMIN_SUCCESS,
+    GETGROUPEADMIN_FAIL,
 } from './type'
 import axios from "axios";  
 import setToken from "../setToken";
@@ -102,6 +103,26 @@ export const updategroupe = (id) => (dispatch) => {
       .catch((err) =>
         dispatch({
           type: ADDSUB_FAIL,
+          payload: err.response.data.msg,
+        })
+      );
+  };
+
+  //----------------------------------------
+
+  export const getgroupeadmin = (id) => (dispatch) => {
+    setToken();
+    axios
+      .get(`http://localhost:4000/groupe/groupeadmin/${id}`)
+      .then((res) =>
+        dispatch({
+          type: GETGROUPEADMIN_SUCCESS,
+          payload: res.data.data,
+        })
+      )
+      .catch((err) =>
+        dispatch({
+          type: GETGROUPEADMIN_FAIL,
           payload: err.response.data.msg,
         })
       );

@@ -163,7 +163,7 @@ exports.list = (req, res) => {
       page = Number.isInteger(req.query.page) ? req.query.page : 0;
     }
   }
-  UserModel.find().then((result) => {
+  User.find().then((result) => {
     res.status(200).send({
       code: 200,
       status: "success",

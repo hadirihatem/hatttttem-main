@@ -16,7 +16,9 @@ const Groupes = ({ groupe }) => {
       <Link to={`/groupe/${groupe._id}`}>
         {" "}
         <h1>{groupe.theme} </h1>
+      
       </Link>
+     
       <button onClick={handlesub}>subscribe</button>
     </div>
   );

@@ -15,7 +15,10 @@ const GroupeSchema = new mongoose.Schema({
     },
     subscribe:[String],
   users:[String],
-  Name: String,
+  Name:{
+    type:String,
+    required:true
+  } ,
    avatar: String,
   theme: String,
   created_at: {

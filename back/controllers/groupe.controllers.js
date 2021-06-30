@@ -70,6 +70,27 @@ exports.list=(req,res)=>{
   );
 }
 
+
+exports.groupeadmin=(req,res)=>{
+
+    Groupe.findBygroupeAdmin(req.params.adminId)
+
+      .then((result) => {
+        res.status(200).send({
+          code: 200,
+          status: "success",
+          message: "groupeadmin fetched",
+          data: result,
+          //req: req.query,
+        });
+      })
+      .catch((e) =>
+        res
+          .status(404)
+          .send("groupeadmin not found, retry with a valid GroupeId.")
+      );
+  
+}
 //--------------------------
 
 
@@ -105,7 +126,7 @@ exports.list = (req, res) => {
   }
 
   if (req.query.groupeAdmin) {
-    Groupe.findByGroupeAdmin(req.query.groupeAdmin)
+    Groupe.findBygroupeAdmin(req.query.groupeAdmin)
       .then((result) => {
         res.status(200).send({
           code: 200,
