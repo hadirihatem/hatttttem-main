@@ -7,27 +7,31 @@ import './Groupes.css'
 
 const Groupes = ({ groupe }) => {
   const user = useSelector((state) => state.user);
+  const auth = useSelector((state) => state.auth);
+
+  
   const dispatch = useDispatch();
   const handlesub = () => {
+    
     dispatch(addsub(groupe._id, user._id));
   };
 
   return (
     
    <div className="wrapper">
-  <div className="card">
-  
+   
+   <div className="card">
       
     <img src="/images/camp1.jpg"/>
     <div className="info">
-    <Link to={`/groupe/${groupe._id}`}>
-        {" "}
-        <div>
-        <h1>{groupe.theme} </h1>
-        </div>
-      </Link>
+    <h1>{groupe.theme} </h1>
+
      
-      <button onClick={handlesub}>subscribe</button>
+      {groupe.subscribe.includes(auth.user._id) ?<Link to={`/groupe/${groupe._id}`}>
+      <div>
+      <h2>join</h2>
+      </div>
+    </Link> :groupe.subvalid.includes(auth.user._id) ? <button >waiting...</button>: <button onClick={handlesub}>subscribe</button>}
     </div>
   </div>
   

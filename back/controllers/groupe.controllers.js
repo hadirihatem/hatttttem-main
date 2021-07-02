@@ -198,3 +198,42 @@ exports.putsub = async (req, res) => {
     res.status(500).json(err); 
   }
 };
+
+//----------addtogroupe-------------+
+
+
+
+exports.addtogroupe=async(req,res)=>{
+  try {
+    const groupe = await Groupe.findById(req.params.groupeId);
+    if (!groupe) return res.status(404).json("Groupe not found")
+      const firstgroupe = await GroupeModel.findByIdAndUpdate(req.params.groupeId,{ $push:{subscribe:req.params.subId}});
+       const newgroupe = await GroupeModel.findByIdAndUpdate(req.params.groupeId,{ $pull:{subvalid:req.params.subId}});
+      res.status(200).json(newgroupe.subscribe);
+      console.log(newgroupe.subscribe)
+     
+    
+   
+  } catch (err) {
+    res.status(500).json(err); 
+  }
+}
+//------------------reject-------
+
+
+exports.reject=async(req,res)=>{
+  try {
+    const groupe = await Groupe.findById(req.params.groupeId);
+    if (!groupe) return res.status(404).json("Groupe not found")
+  
+   
+    
+    const newgroupe = await GroupeModel.findByIdAndUpdate(req.params.groupeId,{ $pull: { subvalid: req.params.subId}});
+     
+      res.status(200).json(newgroupe.subvalid);
+   
+   
+  } catch (err) {
+    res.status(500).json(err); 
+  }
+}

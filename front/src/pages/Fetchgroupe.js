@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import './Groupes.css'
 const Fetchgroupe = ({groupe}) => {
   
-    console.log(groupe)
+    
     return (
         <div className="wrapper">
         <div className="card">

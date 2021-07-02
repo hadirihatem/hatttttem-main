@@ -7,49 +7,36 @@ import Cards from './Cards'
 import './Cards.css';
 import Footer from './Footer';
 
+import { Carousel } from 'antd';
 
-const Home = ({ slides }) => {
-  const [current, setCurrent] = useState(0);
-  const length = slides.length;
- 
+const contentStyle = {
+  height: '160px',
+  color: '#fff',
+  lineHeight: '160px',
+  textAlign: 'center',
+  background: '#364d79',
+};
 
-  const nextSlide = () => {
-    setCurrent(current === length - 1 ? 0 : current + 1);
-  };
+const Home = () => {
 
-  const prevSlide = () => {
-    setCurrent(current === 0 ? length - 1 : current - 1);
-  };
-
-  if (!Array.isArray(slides) || slides.length <= 0) {
-    return null;
-  }
     return (
       <div>
-        
+      <Carousel autoplay>
+      <div>
+        <h3 style={contentStyle}>1</h3>
+      </div>
+      <div>
+        <h3 style={contentStyle}>2</h3>
+      </div>
+      <div>
+        <h3 style={contentStyle}>3</h3>
+      </div>
+      <div>
+        <h3 style={contentStyle}>4</h3>
+      </div>
+    </Carousel>,
        
-        <section className='slider'>
-        <FaArrowAltCircleLeft className='left-arrow' onClick={prevSlide} />
-        <FaArrowAltCircleRight className='right-arrow' onClick={nextSlide} /> 
-          {SliderImg.map((slide,index)=>{
-              return (
-                <div
-                  className={index === current ? 'slide active' : 'slide'}
-                  key={index}
-                >
-                  {index === current && (
-                    <img src={slide.image} alt='travel image' className='image' />
-                  )}
-                </div>
-                
-              );
-                        
-          })}
-       
-            
-                    
-
-        </section>
+      
         <Cards/>
         <Footer />
         </div> 

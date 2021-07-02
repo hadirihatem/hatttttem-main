@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import UploadImg from "./UploadImg";
-import "../App.css";
+
 import { loadUser } from "../action/authaction";
 import "./Profile.css";
 
@@ -19,7 +19,7 @@ const Profile = () => {
   return (
     <div className="feed-container">
       {/* <button onClick={() => profileData()}>New Person</button> */}
-      <div className="card">
+      <div className="cardgr">
         <img
           class="avatar"
           src={user.avatar}

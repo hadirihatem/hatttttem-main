@@ -3,8 +3,7 @@ import BorderColorIcon from "@material-ui/icons/BorderColor";
 import React, { useState } from "react";
 import {useDispatch,useSelector} from 'react-redux'
 import { Modal, Input } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import { Upload, message, Button } from "antd";
+
 import { updatepost } from "../action/postaction";
 
 const EditPost = ({post}) => {
@@ -24,7 +23,7 @@ const EditPost = ({post}) => {
   };
 
   const handleOk = (e) => {
-    if(auth.user._id==post.owner._id)
+    if(auth.user._id===post.owner._id)
 
     dispatch(updatepost(post._id,changepost,file))
     setModalText("The modal will be closed after two seconds");
@@ -40,12 +39,7 @@ const EditPost = ({post}) => {
     setVisible(false);
   };
 
-  const props = {
-    name: "file",
-    headers: {
-      authorization: "authorization-text",
-    },
-  };
+
 
   const handleChange =(e)=>{
    

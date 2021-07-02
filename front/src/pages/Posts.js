@@ -81,17 +81,6 @@ const Posts = ({ post }) => {
       .catch((err) => setError(err.response.data));
   }, []);
 
-  // useEffect((e) => {
-  // if(auth.user){
-  //   dispatch(deletepost(post._id==auth.user._id))
-  // }
-  // }, [])
-
-  // const updateComment = (newComment) => {
-  //   setCommentList(commentList.concat(newComment));
-  // };
-
-  // const [commentList, setCommentList] = useState([]);
 
   return post === null || !post ? (
     <div className="all-page-wrapper flex__center">

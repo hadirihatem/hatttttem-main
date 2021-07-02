@@ -1,70 +1,84 @@
-import React from 'react'
+import React from "react";
 
-import Fetchgroupe from './Fetchgroupe'
+import { Table, Space } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { addtogroupe, reject } from "../action/groupeaction";
 
-import  { useEffect } from 'react'
-import { Table,Space } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUsersList } from '../action/useraction';
-import { getgroupeadmin } from '../action/groupeaction';
+const Tablegroupeadmin = ({ match }) => {
+  const dispatch = useDispatch();
 
-const columns = [
+  const gadmin = useSelector((state) => state.gadmin.groupes);
+
+  const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: 'Phone',
-      dataIndex: 'phone',
-      key: 'phone',
+      title: "Phone",
+      dataIndex: "phone",
+      key: "phone",
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
     },
     {
-      title: 'Action',
-      key: 'action',
-      render: (text, record) => (
+      title: "Action",
+      key: "action",
+      render: (key) => (
         <Space size="middle">
-         <button>accept</button>
-          <button>Delete</button>
+          <button
+            onClick={() =>
+              dispatch(
+                addtogroupe(
+                  newgroupe._id,
+                  newgroupe.subvalid[key.key]._id,
+                  gadmin[0].groupeAdmin
+                )
+              )
+            }
+          >
+            accept
+          </button>
+          <button
+            onClick={() =>
+              dispatch(
+                reject(
+                  newgroupe._id,
+                  newgroupe.subvalid[key.key]._id,
+                  gadmin[0].groupeAdmin,
+                )
+              )
+            }
+          >
+            Delete
+          </button>
         </Space>
       ),
     },
   ];
 
+  const newgroupe =
+    gadmin.find((groupe) => groupe._id === match.params.id) || {};
 
-const Tablegroupeadmin = ({match}) =>{
-const gadmin = useSelector(state => state.gadmin.groupes)
+  const data = [];
+  for (let i = 0; i < newgroupe.subvalid.length; i++) {
+    data.push({
+      key: i,
+      name: `${newgroupe.subvalid[i].firstname}-${newgroupe.subvalid[i].lastname}`,
+      phone: `${newgroupe.subvalid[i].phone}`,
+      email: `${newgroupe.subvalid[i].email} `,
+    });
+  }
 
-    const newgroupe = gadmin.find(groupe => groupe._id==match.params.id) || {}
-    console.log(newgroupe)
+  return (
+    <div>
+      <Table dataSource={data} columns={columns} />
+    </div>
+  );
+};
 
-
-    const dispatch = useDispatch()
-
-
-    const data = [];
-for (let i = 0; i < newgroupe.subvalid.length; i++) {
-  data.push({
-    key: i,
-    name: `${newgroupe.subvalid[i].firstname}-${newgroupe.subvalid[i].lastname}`,
-    phone: `${newgroupe.subvalid[i].phone}`,
-    email: `${newgroupe.subvalid[i].email} `,
-  });
-}
-
-   
-    return (
-        <div>
-      
-        <Table dataSource={data} columns={columns} />
-        
-        </div>
-    )
-}
-
-export default Tablegroupeadmin
+export default Tablegroupeadmin;
