@@ -14,7 +14,6 @@ import { loadUser } from './authaction';
 
 
 export const uploadPicture = (data, id) =>(dispatch)=> {
-  console.log(data)
        axios
         .put(`http://localhost:4000/uploadpic/${id}`, data)
         .then((res) => dispatch(loadUser(id)))
@@ -26,19 +25,22 @@ export const uploadPicture = (data, id) =>(dispatch)=> {
         );
         }
 
-export const updateuser=(data , id)=>(dispatch)=>{
-  axios.put(`http://localhost:4000/users/${id}`, data, id)
+export const updateuser=(id,data )=>(dispatch)=>{
+  console.log(id)
+  console.log(data)
+
+  axios.put(`http://localhost:4000/users/${id}`, data)
   .then((res) => {
-    dispatch(getUsersList());
     dispatch({
       type: UPDATEUSER_SUCCES,
       payload: { user: "User Updated" },
     });
+    dispatch(loadUser())
   })
   .catch((err) =>
     dispatch({
       type: UPDATEUSER_FAIL,
-      payload: err.response.data,
+      payload: err,
     })
   );
 };

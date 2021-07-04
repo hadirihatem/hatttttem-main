@@ -31,7 +31,9 @@ const UploadImg = () => {
         name="file"
         onChange={(e) => setFile(e.target.files[0])}
       />
+      
       <br/>
+      
       <input type="submit" value="Envoyer" />
 
 

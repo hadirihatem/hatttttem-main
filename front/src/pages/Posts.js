@@ -83,7 +83,7 @@ const Posts = ({ post }) => {
 
 
   return post === null || !post ? (
-    <div className="all-page-wrapper flex__center">
+    <div className="post">
       <Spinner />
     </div>
   ) : (
@@ -99,7 +99,7 @@ const Posts = ({ post }) => {
           title={`${post.owner.firstname} ${post.owner.lastname}`}
           subheader={post.owner.created_at}
         />
-        <Image
+        <Image 
    
           src={post.picture}
           title={post.title}

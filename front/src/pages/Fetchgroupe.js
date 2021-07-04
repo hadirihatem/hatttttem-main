@@ -7,7 +7,7 @@ const Fetchgroupe = ({groupe}) => {
     
     return (
         <div className="wrapper">
-        <div className="card">
+        <div className="cardgr">
         
             
           <img src="/images/camp1.jpg"/>
